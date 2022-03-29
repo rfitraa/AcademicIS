@@ -14,11 +14,10 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = Student::all(); //take all data from table
-        $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
+        // $student = Student::all(); //take all data from table
+        // $paginate = Student::orderBy('id_student', 'asc')->simplePaginate(3)->withQueryString();
         return view('student.index', [
-            'student' => $student,
-            'paginate' => $paginate
+            'student' => Student::orderBy('id_student', 'asc')->search(request(['search']))->paginate(3)->withQueryString()
         ]);
     }
 
@@ -44,7 +43,9 @@ class StudentController extends Controller
             'Nim' => 'required',
             'Name' => 'required',
             'Class' => 'required',
-            'Major' => 'required'
+            'Major' => 'required',
+            'Address' => 'required',
+            'DateOfBirth' => 'required'
         ]);
 
         Student::create($request->all());
@@ -90,14 +91,18 @@ class StudentController extends Controller
             'Nim' => 'required',
             'Name' => 'required',
             'Class' => 'required',
-            'Major' => 'required'
+            'Major' => 'required',
+            'Address' => 'required',
+            'DateOfBirth' => 'required'
         ]);
 
         Student::where('nim', $nim)->update([
             'nim' => $request->Nim,
             'name' => $request->Name,
             'class' => $request->Class,
-            'major' => $request->Major
+            'major' => $request->Major,
+            'address' => $request->Address,
+            'dateofbirth' => $request->DateOfBirth,
         ]);
 
         return redirect()->route('student.index')

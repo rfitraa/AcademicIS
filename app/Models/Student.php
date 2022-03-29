@@ -15,5 +15,14 @@ class Student extends Model
         'Name',
         'Class',
         'Major',
+        'Address',
+        'DateOfBirth'
     ];
+
+    public function scopeSearch($query, array $searching)
+    {
+        $query->when($searching['search'] ?? false, function($query, $search){
+            return $query->where('name', 'like', '%'.$search.'%');
+        });
+    }
 }

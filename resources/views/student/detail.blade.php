@@ -12,6 +12,8 @@
                     <li class="list-group-item"><b>Name : </b>{{ $student->name }}</li>
                     <li class="list-group-item"><b>Class : </b>{{ $student->class }}</li>
                     <li class="list-group-item"><b>Major : </b>{{ $student->major }}</li>
+                    <li class="list-group-item"><b>Address : </b>{{ $student->address }}</li>
+                    <li class="list-group-item"><b>Date Of Birth : </b>{{ $student->dateofbirth }}</li>
                 </ul>
             </div>
             <a href="{{ route('student.index') }}" class="btn btn-success">Back</a>
