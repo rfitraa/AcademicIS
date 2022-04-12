@@ -30,7 +30,11 @@
                 </div>
                 <div class="form-group">
                     <label for="Class">Class</label>
-                    <input type="text" name="Class" class="form-control" id="Class" aria-describedby="Class">
+                    <select name="Class" class="form-control" id="">
+                        @foreach($class as $kls)
+                        <option value=" {{ $kls->id }} ">{{ $kls->class_name }}</option>
+                        @endforeach
+                    </select>                    
                 </div>
                 <div class="form-group">
                     <label for="Major">Major</label>

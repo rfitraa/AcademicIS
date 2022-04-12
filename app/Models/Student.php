@@ -25,4 +25,8 @@ class Student extends Model
             return $query->where('name', 'like', '%'.$search.'%');
         });
     }
+
+    public function class(){
+        return $this->belongsTo(ClassModel::class);
+    }
 }
