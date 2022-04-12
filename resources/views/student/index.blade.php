@@ -40,7 +40,7 @@
         <th>Major</th>
         <th>Address</th>
         <th>Date of Birth</th>
-        <th width="280px">Action</th>
+        <th width="300px">Action</th>
     </tr>
     @foreach($student as $mhs)
     <tr>
@@ -57,6 +57,7 @@
                 @csrf
                 @method('DELETE')
                 <button class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                <a href="{{ route('student.nilai',$mhs->nim) }}" class="btn btn-warning">Nilai</a>
             </form>
         </td>
     </tr>

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ClassModel;
+use App\Models\Course;
+use App\Models\Course_Student;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -15,12 +17,12 @@ class StudentController extends Controller
      */
     public function index()
     {
-        $student = Student::with('class')->get(); //take all data from table
-        $paginate = Student::orderBy('id_student', 'asc')->paginate(3);
+        // $student = Student::with('class')->get(); //take all data from table
+        // $paginate = Student::orderBy('id_student', 'asc')->paginate(3)->search(request(['search']));
         return view('student.index', [
-            // 'student' => Student::orderBy('id_student', 'asc')->search(request(['search']))->paginate(3)->withQueryString()
-            'student' => $student,
-            'student' => $paginate
+            'student' => Student::orderBy('id_student', 'asc')->search(request(['search']))->paginate(3)
+            // 'student' => $student,
+            // 'student' => $paginate
         ]);
     }
 
@@ -143,5 +145,11 @@ class StudentController extends Controller
         Student::where('nim', $nim)->delete();
         return redirect()->route('student.index')
             ->with('success', 'Student Successfully Deleted');
+    }
+
+    public function nilai($nim){
+        $student = Student::with('course')->where('nim', $nim)->first();
+        $course_student = Course_Student::all();
+        return view('student.nilai', compact('student','course_student'));
     }
 }

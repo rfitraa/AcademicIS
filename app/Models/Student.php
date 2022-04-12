@@ -29,4 +29,9 @@ class Student extends Model
     public function class(){
         return $this->belongsTo(ClassModel::class);
     }
+
+    public function course(){
+        return $this->belongsToMany(Course::class, 'course_student', 'student_id')
+        ->withPivot('value');;
+    }
 }
