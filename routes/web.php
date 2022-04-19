@@ -20,3 +20,4 @@ Route::get('/', function () {
 
 Route::resource('student',StudentController::class);
 Route::get('/student/{student}/nilai', [StudentController::class, 'nilai'])->name('student.nilai');
+Route::get('/student/{student}/nilai/pdf', [StudentController::class, 'print'])->name('student.print');

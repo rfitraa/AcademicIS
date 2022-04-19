@@ -7,6 +7,8 @@ use App\Models\Course;
 use App\Models\Course_Student;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class StudentController extends Controller
 {
@@ -53,8 +55,13 @@ class StudentController extends Controller
             'Class' => 'required',
             'Major' => 'required',
             'Address' => 'required',
-            'DateOfBirth' => 'required'
+            'DateOfBirth' => 'required',
+            'Photo' => 'required'
         ]);
+
+        if ($request->file('Photo')) {
+            $photo_name = $request->file('Photo')->store('image', 'public');
+        }
 
         $student = new Student;
         $student->nim = $request->get('Nim');
@@ -62,6 +69,8 @@ class StudentController extends Controller
         $student->major = $request->get('Major');
         $student->address = $request->get('Address');
         $student->dateofbirth = $request->get('DateOfBirth');
+        $student->photo = $photo_name;
+        
 
         $class = new ClassModel;
         $class->id = $request->get('Class');
@@ -113,13 +122,21 @@ class StudentController extends Controller
             'Class' => 'required',
             'Major' => 'required',
             'Address' => 'required',
-            'DateOfBirth' => 'required'
-        ]);
+            'DateOfBirth' => 'required',
+            'Photo' => 'required'
+        ]);        
 
         $student = Student::with('class')->where('nim', $nim)->first();
         $student->nim = $request->get('Nim');
         $student->name = $request->get('Name');
-        $student->major = $request->get('Major');
+        $student->major = $request->get('Major');       
+
+        if ($student->photo && file_exists(storage_path('app/public/'. $student->photo))) {
+            Storage::delete(['public/', $student->photo]);
+        }
+
+        $photo_name = $request->file('Photo')->store('image', 'public');
+        $student->photo = $photo_name;
         $student->address = $request->get('Address');
         $student->dateofbirth = $request->get('DateOfBirth');
         $student->save();
@@ -151,5 +168,11 @@ class StudentController extends Controller
         $student = Student::with('course')->where('nim', $nim)->first();
         $course_student = Course_Student::all();
         return view('student.nilai', compact('student','course_student'));
+    }
+
+    public function print($nim){
+        // $student = Student::with('course')->where('nim', $nim)->first();
+        // $pdf = PDF::loadview('student.nilai_pdf', compact('student'));
+        // return $pdf->stream();
     }
 }

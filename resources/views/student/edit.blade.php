@@ -18,7 +18,7 @@
                 </div>
                 @endif
             
-            <form action="{{ route('student.update', $student->nim) }}" method="post" id="myForm">
+            <form action="{{ route('student.update', $student->nim) }}" method="post" id="myForm" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 <div class="form-group">
@@ -48,6 +48,11 @@
                 <div class="form-group">
                     <label for="DateOfBirth">Date Of Birth</label>
                     <input type="date" name="DateOfBirth" class="form-control" id="DateOfBirth" aria-describedby="DateOfBirth" value="{{ $student->dateofbirth }}">
+                </div>
+                <div class="form-group">
+                    <label for="Photo">Photo</label>
+                    <input type="file" name="Photo" class="form-control" id="Photo" aria-describedby="Photo"  value="{{ $student->photo }}">
+                    <img width="150px" src="{{ asset('storage/'.$student->photo )}}" alt="">
                 </div>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </form>

@@ -8,15 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     protected $table = 'student';
-    protected $primaryKey = 'id_student';
+    protected $primaryKey = 'nim';
     use HasFactory;
     protected $fillable = [
         'Nim',
         'Name',
-        'Class',
+        'class_id', // using Class it also work
         'Major',
         'Address',
-        'DateOfBirth'
+        'DateOfBirth',
+        'Photo'
     ];
 
     public function scopeSearch($query, array $searching)
